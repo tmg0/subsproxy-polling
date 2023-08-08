@@ -1,5 +1,5 @@
 [package]
-name = "subsproxy-polling"
+name = "subsproxy_polling"
 version = "0.1.0"
 edition = "2021"
 
