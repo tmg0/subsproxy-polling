@@ -16,7 +16,7 @@ pub fn load_version() -> &'static str {
     return option_env!("CARGO_PKG_VERSION").unwrap();
 }
 
-pub async fn fetch_subsproxy_xray_config_text(url: &str) -> Result<String, ()> {
+pub async fn fetch_subsproxy_xray_config_text(url: &str) -> Result<String, String> {
     let client = Client::new();
     let version = load_version();
     let ua = format!("{}/{}", "Subsproxy", version);
@@ -30,7 +30,7 @@ pub async fn fetch_subsproxy_xray_config_text(url: &str) -> Result<String, ()> {
     if response.status().is_success() {
         Ok(response.text().await.unwrap())
     } else {
-        Err(())
+        Err(String::from(""))
     }
 }
 
