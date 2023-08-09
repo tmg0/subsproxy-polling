@@ -12,8 +12,9 @@ pub fn load_xray_config_filepath() -> String {
     return env::var("XRAY_CONFIG_FILEPATH").unwrap();
 }
 
-pub fn load_version() -> &'static str {
-    return option_env!("CARGO_PKG_VERSION").unwrap();
+pub fn load_version() -> String {
+    let v = option_env!("CARGO_PKG_VERSION").unwrap();
+    return String::from(v);
 }
 
 pub async fn fetch_subsproxy_xray_config_text(url: &str) -> Result<String, String> {
