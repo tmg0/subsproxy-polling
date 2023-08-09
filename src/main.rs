@@ -11,11 +11,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let servers = fetch_subsproxy_xray_config_text(&url).await?;
 
-    println!("{}", servers);
-
     let xray_config_filepath = env::load_xray_config_filepath();
 
-    fse::ensure_file(&xray_config_filepath);
+    let file = fse::ensure_file(&xray_config_filepath);
+
+    fse::write(file, &servers);
 
     Ok(())
 }
