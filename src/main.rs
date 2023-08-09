@@ -1,5 +1,6 @@
 use dotenv::dotenv;
 use reqwest::Client;
+use tokio::time::{Duration, Interval};
 
 mod common;
 use common::{env, fse};
@@ -8,13 +9,17 @@ use common::{env, fse};
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
     let url = env::load_subsproxy_url();
-    let servers = fetch_subsproxy_xray_config_text(&url).await?;
     let xray_config_filepath = env::load_xray_config_filepath();
-    let file = fse::ensure_file(&xray_config_filepath);
 
-    fse::write(file, &servers);
+    let interval_duration = Duration::from_secs(60 * 60);
+    let mut interval: Interval = tokio::time::interval(interval_duration);
 
-    Ok(())
+    loop {
+        interval.tick().await;
+        let servers = fetch_subsproxy_xray_config_text(&url).await?;
+        let file = fse::ensure_file(&xray_config_filepath);
+        fse::write(file, &servers);
+    }
 }
 
 async fn fetch_subsproxy_xray_config_text(url: &str) -> Result<String, String> {
