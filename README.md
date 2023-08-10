@@ -34,21 +34,21 @@ This program utilizes Rust's asynchronous programming features along with the `r
 
 1. Clone the repository:
 
-  ```bash
-  git clone https://github.com/zekunjin/subsproxy-polling.git
-  ```
+    ```bash
+    git clone https://github.com/zekunjin/subsproxy-polling.git
+    ```
 
 2. Navigate to the project directory:
 
-   ```bash
-   cd subsproxy-xray-config-fetcher
-   ```
+    ```bash
+    cd subsproxy-xray-config-fetcher
+    ```
 
 3. Build the project:
 
-   ```bash
-   cargo build --release
-   ```
+    ```bash
+    cargo build --release
+    ```
 
 ### Configuration
 
