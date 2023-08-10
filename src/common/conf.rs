@@ -6,6 +6,7 @@ use crate::fse::read_toml;
 pub struct Conf {
     subsproxy_url: String,
     xray_config_filepath: String,
+    command: Option<String>,
 }
 
 pub fn load_config() -> Conf {
@@ -24,4 +25,15 @@ pub fn load_xray_config_filepath(conf: &Conf) -> &str {
 pub fn load_version() -> String {
     let v = option_env!("CARGO_PKG_VERSION").unwrap();
     return String::from(v);
+}
+
+pub fn load_command(conf: &Conf) -> &str {
+    match &conf.command {
+        Some(cmd) => {
+            return cmd
+        }
+        None => {
+            return ""
+        }
+    }
 }

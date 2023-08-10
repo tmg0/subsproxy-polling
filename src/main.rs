@@ -2,13 +2,14 @@ use reqwest::Client;
 use tokio::time::{Duration, Interval};
 
 mod common;
-use common::{conf, fse};
+use common::{conf, fse, process};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let conf = conf::load_config();
     let url = conf::load_subsproxy_url(&conf);
     let xray_config_filepath = conf::load_xray_config_filepath(&conf);
+    let cmd = conf::load_command(&conf);
 
     let interval_duration = Duration::from_secs(60 * 60);
     let mut interval: Interval = tokio::time::interval(interval_duration);
@@ -18,6 +19,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let servers = fetch_subsproxy_xray_config_text(url).await?;
         let file = fse::ensure_file(xray_config_filepath);
         fse::write(file, &servers);
+        process::exec(cmd).unwrap();
     }
 }
 
