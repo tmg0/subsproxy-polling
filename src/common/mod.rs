@@ -1,2 +1,2 @@
-pub mod env;
+pub mod conf;
 pub mod fse;

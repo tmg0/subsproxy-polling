@@ -1,6 +1,9 @@
+use serde::de::DeserializeOwned;
 use std::fs;
-use std::io::Write;
+use std::io::{Read, Write};
 use std::path::Path;
+use toml::de::Error as TomlError;
+use toml::Value;
 
 pub fn ensure_file(file_path: &str) -> fs::File {
     ensure_dir(dirname(file_path));
@@ -25,4 +28,15 @@ pub fn dirname(file_path: &str) -> &str {
 
 pub fn write(mut file: fs::File, content: &str) {
     file.write_all(content.as_bytes()).unwrap();
+}
+
+pub fn read_toml<T: DeserializeOwned>(file_path: &str) -> Result<T, TomlError> {
+    let mut file = fs::File::open(file_path).unwrap();
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).unwrap();
+
+    let parsed: Value = contents.parse()?;
+    let config: T = parsed.try_into()?;
+
+    Ok(config)
 }
