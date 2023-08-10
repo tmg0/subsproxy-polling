@@ -22,8 +22,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         
         if !cmd.is_empty() {
             process::exec(cmd).unwrap();
-        }
-        
+        }   
     }
 }
 
