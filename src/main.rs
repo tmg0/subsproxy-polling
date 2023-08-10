@@ -19,7 +19,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let servers = fetch_subsproxy_xray_config_text(url).await?;
         let file = fse::ensure_file(xray_config_filepath);
         fse::write(file, &servers);
-        process::exec(cmd).unwrap();
+        
+        if !cmd.is_empty() {
+            process::exec(cmd).unwrap();
+        }
+        
     }
 }
 
