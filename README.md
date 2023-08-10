@@ -1,4 +1,4 @@
-# Subsproxy Pollling.
+# Subsproxy Pollling
 
 This Rust program periodically fetches Xray configuration data from a Subsproxy server and writes it to a local file. It can also execute a specified command after fetching the configuration.
 
